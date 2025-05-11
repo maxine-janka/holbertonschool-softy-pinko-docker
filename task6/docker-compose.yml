@@ -1,0 +1,29 @@
+services:
+  back-end:
+    image: softy-pinko-back-end:task5
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    expose:
+     - "5252"
+
+  front-end:
+    image: softy-pinko-front-end:task5
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    expose:
+     - "9000"
+    depends_on: 
+      - back-end
+
+  proxy:
+    image: softy-pinko-proxy:task5
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on: 
+      - back-end
+      - front-end
